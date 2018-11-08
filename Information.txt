@@ -1,0 +1,5 @@
+Colors-
+Red: D22042 rgb(210, 32, 66)
+Green: A3B808 rgb(163, 184, 8)
+Yellow: F3DB2C rbg(243, 219, 44)
+Blue: 30C4C9 rbg(48, 196, 201)
