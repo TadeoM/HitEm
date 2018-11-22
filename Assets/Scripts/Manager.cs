@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 public enum GameState {Paused, Unpaused, GameOver }
 public class Manager : MonoBehaviour {
     public GameState gameState;
@@ -63,6 +64,10 @@ public class Manager : MonoBehaviour {
             case GameState.GameOver:
                 EndGame();
                 PauseScene();
+                if (Input.GetKeyDown(KeyCode.M))
+                {
+                    SceneManager.LoadScene(0);
+                }
                 break;
             default:
                 break;

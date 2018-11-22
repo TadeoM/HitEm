@@ -24,7 +24,8 @@ public class BrickGenerator : MonoBehaviour {
                 brickScript.xPos = 3.54f + (y * 3f);
                 brickScript.yPos = 0.9f + (x * 3f);
                 brickScript.ValueSet();
-                if(brickScript.lifePoints < 0)
+
+                if (brickScript.lifePoints < 0)
                 {
                     brickArray[x, y] = Instantiate(powerup);
                 }

@@ -13,6 +13,11 @@ public class PowerUp : MonoBehaviour {
     public Vector3 yellow;
     public Vector3 blue;
     public Color currentColor;
+    // runs right before start
+    private void Awake()
+    {
+        ValueSet();
+    }
 
     public void ValueSet()
     {
@@ -21,7 +26,7 @@ public class PowerUp : MonoBehaviour {
         yellow = new Vector3(243, 219, 44);
         blue = new Vector3(48, 196, 201);
 
-        Random.Range(0, 4);
+        Random.Range(-3, 4);
 
         currentPos = new Vector3(xPos, yPos, 0);
         transform.position = currentPos;
@@ -32,14 +37,23 @@ public class PowerUp : MonoBehaviour {
     {
         switch (powerUps)
         {
+            case -3:
+            case -2:
+            case -1:
+            case 0:
+                Destroy(this.gameObject);
+                break;
             case 1:
-                currentColor = new Color(0,0,0);
+                currentColor = new Color(red.x, red.y, red.z);
                 break;
             case 2:
-                currentColor = new Color(0, 0, 0);
+                currentColor = new Color(green.x, green.y, green.z);
                 break;
             case 3:
-                currentColor = new Color(0, 0, 0);
+                currentColor = new Color(yellow.x, yellow.y, yellow.z);
+                break;
+            case 4:
+                currentColor = new Color(blue.x, blue.y, blue.z);
                 break;
             default:
                 break;
@@ -54,7 +68,7 @@ public class PowerUp : MonoBehaviour {
         if (collision.gameObject.tag == "ball")
         {
             //Debug.Log("That object was a ball");
-            collision.gameObject.GetComponent<Ball>()
+            collision.gameObject.GetComponent<Ball>();
         }
     }
 }
