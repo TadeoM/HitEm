@@ -26,7 +26,7 @@ public class BrickGenerator : MonoBehaviour {
                 brickScript.ValueSet();
                 if(brickScript.lifePoints < 0)
                 {
-                    brickArray[x, y] = Instantiate(powerup);
+                    //brickArray[x, y] = Instantiate(powerup);
                 }
             }
         }

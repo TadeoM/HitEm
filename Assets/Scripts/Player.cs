@@ -51,7 +51,6 @@ public class Player : MonoBehaviour {
                 case 1:
                     if (Input.GetKey(KeyCode.W))
                     {
-                        Debug.Log("Moving");
                         Move(speed);
                     }
                     if (Input.GetKey(KeyCode.S))
