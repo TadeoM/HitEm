@@ -27,7 +27,7 @@ public class BrickGenerator : MonoBehaviour {
 
                 if (brickScript.lifePoints < 0)
                 {
-                    brickArray[x, y] = Instantiate(powerup);
+                    //brickArray[x, y] = Instantiate(powerup);
                 }
             }
         }

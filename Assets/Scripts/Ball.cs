@@ -8,11 +8,17 @@ public class Ball : MonoBehaviour {
     public bool isPaused;
     public Vector3 velocity;
     private int timer = 0;
+    public AudioClip[] sounds; // 0 = brickHit1, 1 = brickHit2, 2 = brickBreak1, 3 = brickBreak2, 4 = score1, 5 = score2
+    public AudioSource source;
+    public GameObject sourceObject;
 
 	// Use this for initialization
 	void Awake () {
+        sourceObject = GameObject.FindGameObjectWithTag("controller");
+        source = sourceObject.GetComponent<AudioSource>();
         scene = FindObjectOfType<Manager>();
         isPaused = false;
+
 	}
 	
 	// Update is called once per frame
@@ -63,6 +69,7 @@ public class Ball : MonoBehaviour {
         {
             if (collision.gameObject.tag == "player1" || collision.gameObject.tag == "player2")
             {
+               // audioPlayer.
                 ySpeed = Vector3.Dot(collision.gameObject.transform.position - transform.position, Vector3.up);
                 float aboveOrBelow = Vector3.Dot(collision.gameObject.transform.position - transform.position, Vector3.right);
                 ySpeed = -ySpeed;
@@ -80,6 +87,7 @@ public class Ball : MonoBehaviour {
                 }
                 velocity.x = -velocity.x;
                 timer = 2;
+
             }
             else if(collision.gameObject.tag == "brick")
             {
@@ -87,9 +95,27 @@ public class Ball : MonoBehaviour {
                 switch (ballOwner)
                 {
                     case 1:
+                        if(collision.gameObject.GetComponent<Brick>().lifePoints <= 0)
+                        {
+                            source.clip = sounds[3];
+                        }
+                        else
+                        {
+                            source.clip = sounds[1];
+                        }
+                        source.Play();
                         manager.playerOneScore++;
                         break;
                     case 2:
+                        if (collision.gameObject.GetComponent<Brick>().lifePoints <= 0)
+                        {
+                            source.clip = sounds[4];
+                        }
+                        else
+                        {
+                            source.clip = sounds[2];
+                        }
+                        source.Play();
                         manager.playerTwoScore++;
                         break;
                     default:
@@ -121,15 +147,20 @@ public class Ball : MonoBehaviour {
     {
         if (transform.position.x > 27f)
         {
-            Destroy(gameObject);
+            source.clip = sounds[4];
+            source.Play();
             Manager managerScript = GameObject.FindGameObjectWithTag("controller").GetComponent<Manager>();
             managerScript.playerOneScore += 5;
+            Destroy(gameObject);
         }
         if(transform.position.x < -5.5f)
         {
-            Destroy(gameObject);
+            source.clip = sounds[5];
+            source.Play();
             Manager managerScript = GameObject.FindGameObjectWithTag("controller").GetComponent<Manager>();
             managerScript.playerTwoScore += 5;
+            Destroy(gameObject);
         }
+        
     }
 }

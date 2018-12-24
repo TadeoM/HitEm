@@ -19,36 +19,53 @@ public class Menu : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (start.GetComponent<Press>().isPressed)
+		/*if (start.GetComponent<Press>().isPressed)
         {
             start.GetComponent<Press>().isPressed = false;
-            SceneManager.LoadScene("main", LoadSceneMode.Single);
+            
         }
         else if (instructions.GetComponent<Press>().isPressed)
         {
             Debug.Log("Interupt");
             instructions.GetComponent<Press>().isPressed = false;
-            start.SetActive(false);
-            instructions.SetActive(false);
-            quit.SetActive(false);
-            rulesBox.SetActive(true);
-            returnBut.SetActive(true);
+            
         }
         else if (quit.GetComponent<Press>().isPressed)
 
         {
             quit.GetComponent<Press>().isPressed = false;
-            Application.Quit();
+            
         }
         else if(returnBut.GetComponent<Press>().isPressed)
         {
             Debug.Log("Pressing");
             returnBut.GetComponent<Press>().isPressed = false;
-            start.SetActive(true);
-            instructions.SetActive(true);
-            quit.SetActive(true);
-            rulesBox.SetActive(false);
-            returnBut.SetActive(false);
-        }
+            
+        }*/
+    }
+
+    public void StartPressed()
+    {
+        SceneManager.LoadScene("main", LoadSceneMode.Single);
+    }
+    public void InstructionsPressed()
+    {
+        start.SetActive(false);
+        instructions.SetActive(false);
+        quit.SetActive(false);
+        rulesBox.SetActive(true);
+        returnBut.SetActive(true);
+    }
+    public void QuitPressed()
+    {
+        Application.Quit();
+    }
+    public void ReturnPressed()
+    {
+        start.SetActive(true);
+        instructions.SetActive(true);
+        quit.SetActive(true);
+        rulesBox.SetActive(false);
+        returnBut.SetActive(false);
     }
 }
