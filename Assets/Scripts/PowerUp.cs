@@ -6,27 +6,26 @@ public class PowerUp : MonoBehaviour {
 
     public float xPos;
     public float yPos;
-    public int powerUps;
+    public int powerups;
     public Vector3 currentPos;
-    public Vector3 red;
     public Vector3 green;
-    public Vector3 yellow;
+    public Vector3 purple;
     public Vector3 blue;
     public Color currentColor;
     // runs right before start
     private void Awake()
     {
-        ValueSet();
+        //ValueSet();
     }
 
     public void ValueSet()
     {
-        red = new Vector3(210, 32, 66);
-        green = new Vector3(163, 184, 8);
-        yellow = new Vector3(243, 219, 44);
-        blue = new Vector3(48, 196, 201);
+        green = new Vector3(0, 133, 23);
+        purple = new Vector3(63, 0, 107);
+        blue = new Vector3(27, 0, 166);
 
-        Random.Range(-3, 4);
+        powerups = Random.Range(1, 4);
+        Debug.Log("GOT here ");
 
         currentPos = new Vector3(xPos, yPos, 0);
         transform.position = currentPos;
@@ -35,7 +34,7 @@ public class PowerUp : MonoBehaviour {
 
     public void UpdateColor()
     {
-        switch (powerUps)
+        switch (powerups)
         {
             case -3:
             case -2:
@@ -44,16 +43,13 @@ public class PowerUp : MonoBehaviour {
                 Destroy(this.gameObject);
                 break;
             case 1:
-                currentColor = new Color(red.x, red.y, red.z);
+                currentColor = new Color(green.x / 255f, green.y / 255f, green.z / 255f);
                 break;
             case 2:
-                currentColor = new Color(green.x, green.y, green.z);
+                currentColor = new Color(blue.x / 255f, blue.y / 255f, blue.z / 255f);
                 break;
             case 3:
-                currentColor = new Color(yellow.x, yellow.y, yellow.z);
-                break;
-            case 4:
-                currentColor = new Color(blue.x, blue.y, blue.z);
+                currentColor = new Color(purple.x / 255f, purple.y / 255f, purple.z / 255f);
                 break;
             default:
                 break;
@@ -61,14 +57,26 @@ public class PowerUp : MonoBehaviour {
 
         gameObject.GetComponent<SpriteRenderer>().color = currentColor;
     }
-
-    private void OnCollisionEnter2D(Collision2D collision)
+    
+    public void DeleteThis(GameObject player)
     {
-        //Debug.Log("Brick got into a collision with something");
-        if (collision.gameObject.tag == "ball")
+        switch (powerups)
         {
-            //Debug.Log("That object was a ball");
-            collision.gameObject.GetComponent<Ball>();
+            case 1:
+                player.transform.localScale = new Vector3(player.transform.localScale.x, player.transform.localScale.y * 1.2f, player.transform.localScale.z);
+                break;
+            case 2:
+                player.GetComponent<Player>().speed *= 1.1f;
+                break;
+            case 3:
+                GameObject playerTwo = GameObject.FindGameObjectWithTag("player2");
+                playerTwo.GetComponent<Player>().speed *= 0.9f;
+                break;
+            case 4:
+                break;
+            default:
+                break;
         }
+        Destroy(gameObject);
     }
 }

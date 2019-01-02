@@ -19,13 +19,11 @@ public class Brick : MonoBehaviour {
         green = new Vector3(163, 184, 8);
         yellow = new Vector3(243, 219, 44);
         blue = new Vector3(48, 196, 201);
-
         lifePoints = Random.Range(-2, 12);
         if (lifePoints < 4 && lifePoints > 0)
         {
             lifePoints = 4;
         }
-        
         currentPos = new Vector3(xPos, yPos, 0);
         transform.position = currentPos;
         UpdateColor();

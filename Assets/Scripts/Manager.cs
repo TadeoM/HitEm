@@ -100,9 +100,9 @@ public class Manager : MonoBehaviour {
         playerOneText = "Score: " + playerOneScore;
         playerTwoText = "Score: " + playerTwoScore;
         timerText = "Time Left: " + (int)gameTimer;
-        canvas.transform.GetChild(0).GetComponent<Text>().text = playerOneText;
-        canvas.transform.GetChild(1).GetComponent<Text>().text = playerTwoText;
-        canvas.transform.GetChild(2).GetComponent<Text>().text = timerText;
+        canvas.transform.GetChild(1).GetComponent<Text>().text = playerOneText;
+        canvas.transform.GetChild(2).GetComponent<Text>().text = playerTwoText;
+        canvas.transform.GetChild(3).GetComponent<Text>().text = timerText;
     }
 
     void PauseScene()

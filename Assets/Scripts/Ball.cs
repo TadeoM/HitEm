@@ -5,6 +5,7 @@ using UnityEngine;
 public class Ball : MonoBehaviour {
     Manager scene;
     public int ballOwner;
+    public GameObject[] playersObj;
     public bool isPaused;
     public Vector3 velocity;
     private int timer = 0;
@@ -14,11 +15,13 @@ public class Ball : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
+        playersObj = new GameObject[2];
+        playersObj[0] = GameObject.FindWithTag("player1");
+        playersObj[1] = GameObject.FindWithTag("player2");
         sourceObject = GameObject.FindGameObjectWithTag("controller");
         source = sourceObject.GetComponent<AudioSource>();
         scene = FindObjectOfType<Manager>();
         isPaused = false;
-
 	}
 	
 	// Update is called once per frame
@@ -65,11 +68,11 @@ public class Ball : MonoBehaviour {
     {
         Transform collisionTransform = collision.gameObject.GetComponent<Transform>();
         float ySpeed = velocity.y;
-        if(timer == 0)
+        if (timer == 0)
         {
             if (collision.gameObject.tag == "player1" || collision.gameObject.tag == "player2")
             {
-               // audioPlayer.
+                // audioPlayer.
                 ySpeed = Vector3.Dot(collision.gameObject.transform.position - transform.position, Vector3.up);
                 float aboveOrBelow = Vector3.Dot(collision.gameObject.transform.position - transform.position, Vector3.right);
                 ySpeed = -ySpeed;
@@ -89,13 +92,13 @@ public class Ball : MonoBehaviour {
                 timer = 2;
 
             }
-            else if(collision.gameObject.tag == "brick")
+            else if (collision.gameObject.tag == "brick" )
             {
                 Manager manager = FindObjectOfType<Manager>();
                 switch (ballOwner)
                 {
                     case 1:
-                        if(collision.gameObject.GetComponent<Brick>().lifePoints <= 0)
+                        if (collision.gameObject.GetComponent<Brick>().lifePoints <= 0)
                         {
                             source.clip = sounds[3];
                         }
@@ -121,14 +124,15 @@ public class Ball : MonoBehaviour {
                     default:
                         break;
                 }
+
                 // dot product to check how far above or below the brick the ball is, if it both the right and up dot products are greater than 
                 //(insert value here) value, then the ball is above the brick and you need to change the Y direction
                 /// NOT DONE
-                if (Vector3.Dot(transform.position - collision.transform.position, transform.up) >= 1.22 
+                if (Vector3.Dot(transform.position - collision.transform.position, transform.up) >= 1.22
                     || Vector3.Dot(transform.position - collision.transform.position, transform.up) <= -1.22)
                 {
                     velocity.y = -velocity.y;
-                    if(velocity.y > 0.02 || velocity.y < -0.02)
+                    if (velocity.y > 0.02 || velocity.y < -0.02)
                     {
                         velocity.x = -velocity.x;
                     }
@@ -137,10 +141,16 @@ public class Ball : MonoBehaviour {
                 velocity.x = -velocity.x;
                 timer = 2;
             }
-            
+            else if (collision.gameObject.tag == "powerup")
+            {
+                Manager manager = FindObjectOfType<Manager>();
+                PowerUp powerupScript = collision.gameObject.GetComponent<PowerUp>();
+                source.clip = sounds[ballOwner + 2];
+                source.Play();
+                powerupScript.DeleteThis(playersObj[ballOwner - 1]);
+                timer = 2;
+            }
         }
-        
-
     }
 
     void RemoveOnceOutOfBounds()

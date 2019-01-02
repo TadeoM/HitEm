@@ -75,7 +75,7 @@ public class Player : MonoBehaviour {
         }
     }
 
-    void Move(float y)
+    public void Move(float y)
     {
         currentPos.y += y;
     }
