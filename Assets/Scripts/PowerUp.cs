@@ -25,7 +25,6 @@ public class PowerUp : MonoBehaviour {
         blue = new Vector3(27, 0, 166);
 
         powerups = Random.Range(1, 4);
-        Debug.Log("GOT here ");
 
         currentPos = new Vector3(xPos, yPos, 0);
         transform.position = currentPos;

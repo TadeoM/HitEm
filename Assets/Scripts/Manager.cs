@@ -3,23 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 public enum GameState {Paused, Unpaused, GameOver }
 public class Manager : MonoBehaviour {
     public GameState gameState;
     public BrickGenerator brickGenerator;
     public BallGenerator ballGenerator;
+    public GameObject player1;
+    public GameObject player2;
     public Canvas canvas;
+    public float gameTimer;
     public int playerOneScore;
     public int playerTwoScore;
-    public float gameTimer;
-    private bool gamePaused;
+
     private string timerText;
-    public GameObject player1;
-    Player player1Script;
-    string playerOneText;
-    public GameObject player2;
-    Player player2Script;
-    string playerTwoText;
+    private Player player1Script;
+    private string playerOneText;
+    private Player player2Script;
+    private string playerTwoText;
 
     // Use this for initialization
     void Awake()
@@ -27,7 +28,6 @@ public class Manager : MonoBehaviour {
         playerOneScore = 0;
         playerTwoScore = 0;
         gameTimer = 60;
-        //Debug.Log("Hello");
         brickGenerator = gameObject.GetComponent<BrickGenerator>();
         ballGenerator = gameObject.GetComponent<BallGenerator>();
         brickGenerator.Generate();
@@ -42,7 +42,7 @@ public class Manager : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void FixedUpdate ()
+    void Update ()
     {
         switch (gameState)
         {
@@ -100,9 +100,9 @@ public class Manager : MonoBehaviour {
         playerOneText = "Score: " + playerOneScore;
         playerTwoText = "Score: " + playerTwoScore;
         timerText = "Time Left: " + (int)gameTimer;
-        canvas.transform.GetChild(1).GetComponent<Text>().text = playerOneText;
-        canvas.transform.GetChild(2).GetComponent<Text>().text = playerTwoText;
-        canvas.transform.GetChild(3).GetComponent<Text>().text = timerText;
+        canvas.transform.GetChild(1).GetComponent<TMP_Text>().text = playerOneText;
+        canvas.transform.GetChild(2).GetComponent<TMP_Text>().text = playerTwoText;
+        canvas.transform.GetChild(3).GetComponent<TMP_Text>().text = timerText;
     }
 
     void PauseScene()
@@ -110,13 +110,13 @@ public class Manager : MonoBehaviour {
         switch (gameState)
         {
             case GameState.Paused:
-                canvas.transform.GetChild(3).GetComponent<Text>().text = "";
+                canvas.transform.GetChild(3).GetComponent<TMP_Text>().text = "";
                 gameState = GameState.Unpaused;
                 break;
             case GameState.Unpaused:
                 timerText = "Game Paused";
-                canvas.transform.GetChild(3).GetComponent<Text>().text = "Press P to Play";
-                canvas.transform.GetChild(2).GetComponent<Text>().text = timerText;
+                canvas.transform.GetChild(3).GetComponent<TMP_Text>().text = "Press P to Play";
+                canvas.transform.GetChild(2).GetComponent<TMP_Text>().text = timerText;
                 gameState = GameState.Paused;
                 break;
             default:
@@ -126,11 +126,11 @@ public class Manager : MonoBehaviour {
     void EndGame()
     {
         if(playerOneScore > playerTwoScore)
-            canvas.transform.GetChild(3).GetComponent<Text>().text = "PLAYER 1 WINS\nPress M to go to menu!";
+            canvas.transform.GetChild(3).GetComponent<TMP_Text>().text = "PLAYER 1 WINS\nPress M to go to menu!";
         else if(playerTwoScore > playerOneScore)
-            canvas.transform.GetChild(3).GetComponent<Text>().text = "PLAYER 2 WINS\nPress M to go to menu!";
+            canvas.transform.GetChild(3).GetComponent<TMP_Text>().text = "PLAYER 2 WINS\nPress M to go to menu!";
         else
-            canvas.transform.GetChild(3).GetComponent<Text>().text = "DRAW\nPress M to go to menu!";
+            canvas.transform.GetChild(3).GetComponent<TMP_Text>().text = "DRAW\nPress M to go to menu!";
         gameState = GameState.GameOver;
     }
 }

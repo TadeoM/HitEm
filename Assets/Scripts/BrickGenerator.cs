@@ -26,7 +26,6 @@ public class BrickGenerator : MonoBehaviour {
                 brickScript.ValueSet();
                 if (brickScript.lifePoints <= 0)
                 {
-                    Debug.Log("Brick Script life is 0.");
                     brickArray[x, y] = Instantiate(powerup);
                     PowerUp powerScript = brickArray[x, y].GetComponent<PowerUp>();
                     powerScript.xPos = brickScript.xPos;
